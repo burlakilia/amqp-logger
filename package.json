@@ -1,0 +1,22 @@
+{
+  "name": "amqp-logger",
+  "version": "0.0.2",
+  "description": "Logging to amqp and to your own application tracer (for example console)",
+  "keywords": [
+    "amqp",
+    "connect",
+    "gateway"
+  ],
+  "main": "logger",
+  "dependencies": {
+    "owg": "0.1.0"
+  },
+  "readme": "# AMQP\r\n\r\nThe wrap stadart tracer in your application, and publising your logs via amqp protocol, for example to kibana\r\n\r\n```\r\nvar logger = require('./utils/logger').init(console, {{\r\n\t'name': 'My application',\r\n\t'enviroment': 'Dev',\r\n\t'protocol': 'amqp',\r\n\t'level': 'trace',\r\n\t'connection': 'amqp://localhost/rabbitmq',\r\n\t'exchange': 'exchange-name',\r\n\t'routingKey': 'yourRoutingKey',\r\n\t'durable': true,\r\n\t\"delay\": 30000\r\n});\r\n\r\n\r\nlogger.trace('Hello world', {a: '1'});\r\n//-> Hello world {a: 'a'}\r\n```",
+  "readmeFilename": "README.md",
+  "_id": "amqp-logger@0.0.2",
+  "dist": {
+    "shasum": "8a27a39277ad581aaa8542c8f52a348c53e1e80c"
+  },
+  "_from": "amqp-logger@0.0.2",
+  "_resolved": "http://registry.npmjs.org/amqp-logger/-/amqp-logger-0.0.2.tgz"
+}
