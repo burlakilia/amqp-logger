@@ -1,4 +1,4 @@
-# AMQP
+# AMQP Logger
 
 The wrap stadart tracer in your application, and publising your logs via amqp protocol, for example to kibana
 
@@ -18,4 +18,9 @@ var logger = require('./utils/logger').init(console, {{
 
 logger.trace('Hello world', {a: '1'});
 //-> Hello world {a: 'a'}
+```
+
+# Install
+```
+npm install amqp-logger
 ```
