@@ -5,7 +5,7 @@ The wrap stadart tracer in your application, and publising your logs via amqp pr
 ```
 var logger = require('./utils/logger').init(console, {{
 	'name': 'My application',
-	'enviroment': 'Dev',
+	'environment': 'Dev',
 	'protocol': 'amqp',
 	'level': 'trace',
 	'connection': 'amqp://localhost/rabbitmq',
