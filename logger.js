@@ -28,7 +28,7 @@ exports.init = function (tracer, config) {
                     timestamp: Date.now(),
                     logger: logger,
                     level: level,
-                    enviroment: cfg.enviroment,
+                    environment: cfg.environment,
                     app: cfg.name,
                     text: text
                 };
