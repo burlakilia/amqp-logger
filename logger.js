@@ -1,4 +1,5 @@
-var gateway = require('owg');
+var gateway = require('owg'),
+    os = require('os');
 
 var levels = ['log', 'trace', 'debug', 'info', 'warn', 'error'];
 
@@ -29,6 +30,7 @@ exports.init = function (tracer, config) {
                     logger: logger,
                     level: level,
                     environment: cfg.environment,
+                    machine: os.hostname(),
                     app: cfg.name,
                     text: text
                 };
