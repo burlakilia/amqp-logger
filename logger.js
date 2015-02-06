@@ -40,8 +40,9 @@ exports.init = function (tracer, config) {
 
             function send() {
                 cache.forEach(publish);
-                tracer.trace('messages was sent to kibana', cache);
+                tracer.trace('Messages were sent to kibana', cache);
                 cache = [];
+                timeout = null;
             }
 
             fns[level] = function () {
