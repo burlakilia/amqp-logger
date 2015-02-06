@@ -1,6 +1,11 @@
-var gateway = require('owg');
+var gateway = require('owg'),
+    util = require('util');
 
 var levels = ['log', 'trace', 'debug', 'info', 'warn', 'error'];
+
+function transform (msg) {
+    return typeof msg === 'object' ? JSON.stringify(msg) : msg;
+}
 
 function compare(current, minimal) {
     return levels.indexOf(current) >= levels.indexOf(minimal);
