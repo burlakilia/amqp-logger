@@ -1,5 +1,6 @@
 var gateway = require('owg'),
-    os = require('os');
+    os = require('os'),
+    util = require('util');
 
 var levels = ['log', 'trace', 'debug', 'info', 'warn', 'error'];
 
@@ -22,17 +23,17 @@ exports.init = function (tracer, config) {
 
         function wrap(level) {
 
-            function compose(msg) {
-                var text = typeof msg === 'object' && msg.length ? msg.map(transform).join(', ') : msg;
+            function compose (msg) {
+                var message = util.format.apply(null, typeof msg === 'object' && msg.length ? msg.map(transform) : [transform(msg)]);
 
                 return {
-                    timestamp: Date.now(),
+                    timestamp: new Date().toISOString(),
                     logger: logger,
-                    level: level,
+                    level: level.charAt(0).toUpperCase() + level.substr(1),
                     environment: cfg.environment,
                     machine: os.hostname(),
                     app: cfg.name,
-                    text: text
+                    message: message
                 };
 
             }
