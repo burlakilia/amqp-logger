@@ -1,9 +1,9 @@
 var gateway = require('owg'),
-    os = require('os');
+    util = require('util');
 
 var levels = ['log', 'trace', 'debug', 'info', 'warn', 'error'];
 
-function transform(msg) {
+function transform (msg) {
     return typeof msg === 'object' ? JSON.stringify(msg) : msg;
 }
 
@@ -11,10 +11,17 @@ function compare(current, minimal) {
     return levels.indexOf(current) >= levels.indexOf(minimal);
 }
 
-exports.init = function (tracer, config) {
+exports.init = function (tracer, config, compose) {
     var publish = gateway(config, tracer).publish,
         cache = [],
         timeout;
+
+    function send () {
+        cache.forEach(publish);
+        tracer.trace('Messages were sent to kibana', cache);
+        cache = [];
+        timeout = null;
+    }
 
     function create(logger) {
         var cfg = config,
@@ -22,32 +29,17 @@ exports.init = function (tracer, config) {
 
         function wrap(level) {
 
-            function compose(msg) {
-                var text = typeof msg === 'object' && msg.length ? msg.map(transform).join(', ') : msg;
-
-                return {
-                    timestamp: Date.now(),
-                    logger: logger,
-                    level: level,
-                    environment: cfg.environment,
-                    machine: os.hostname(),
-                    app: cfg.name,
-                    text: text
-                };
-
-            }
-
-            function send() {
-                cache.forEach(publish);
-                tracer.trace('messages was sent to kibana', cache);
-                cache = [];
-            }
-
-            fns[level] = function () {
+            fns[level] = function() {
                 var args = Array.prototype.slice.call(arguments);
 
+                var msg = {
+                    level: level,
+                    logger: logger,
+                    msg: util.format.apply(null, args.map(transform))
+                };
+
                 tracer[level].apply(tracer, args);
-                compare(level, cfg.level) && cache.push(compose(args));
+                compare(level, cfg.level) && cache.push(compose(msg));
 
                 timeout || (timeout = setTimeout(send, cfg.delay));
             };
