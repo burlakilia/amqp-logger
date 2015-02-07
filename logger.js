@@ -16,7 +16,7 @@ exports.init = function (tracer, config, compose) {
         cache = [],
         timeout;
 
-    function send () {
+    function send() {
         cache.forEach(publish);
         tracer.trace('Messages were sent to kibana', cache);
         cache = [];
