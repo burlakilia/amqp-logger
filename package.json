@@ -1,6 +1,6 @@
 {
     "name": "amqp-logger",
-    "version": "0.0.7",
+    "version": "0.1.0",
     "description": "Logging to amqp and to your own application tracer (for example console)",
     "keywords": [
         "amqp",
